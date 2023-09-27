@@ -1,0 +1,102 @@
+﻿@page "/inventory"
+@page "/inventory/{InventoryId:int}"
+@using AceCorpIMS.Client.Models;
+
+@inject NavigationManager NavigationManager
+
+<PageTitle>@title</PageTitle>
+<h1>Office Equipment Inventory</h1>
+<h3>@title</h3>
+
+@if (inventory is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+
+<div class="row">
+    <div class="col-sm-4">
+        <EditForm Model="@inventory" OnValidSubmit="HandleSubmit">
+            <DataAnnotationsValidator/>
+            <ValidationSummary/>
+            <div class="mb-3">
+                <label for="inventoryName" class="form-label">Inventory Name:</label>
+                <InputText id="inventoryName" @bind-Value="inventory.InventoryName" class="form-control"></InputText>
+            </div>
+            <div class="mb-3">
+                <label for="quantity" class="form-label">Quantity:</label>
+                <InputNumber id="quantity" @bind-Value="inventory.Quantity" class="form-control"></InputNumber>
+            </div>
+            <div class="mb-3">
+                <label for="Price" class="form-label">Price:</label>
+                <InputNumber id="price" @bind-Value="inventory.Price" class="form-control"></InputNumber>
+            </div>
+            <div class="mb-3">
+                <label for="dateReceived" class="form-label">Date Received:</label>
+                <InputDate id="dateReceived" @bind-Value="inventory.DateReceived" class="form-control"></InputDate>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-secondary" @onclick="@Cancel">Cancel</button>
+        </EditForm>
+    </div>
+</div>
+}
+
+@code {
+    [Parameter]
+    public int? InventoryId { get; set; }
+
+    private Inventory? inventory;
+
+    private string title = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        if (InventoryId is not null)
+        {
+            Inventory foundInventory = InventoryClient.GetInventory(InventoryId.Value);
+            inventory = new()
+                {
+                    InventoryId = foundInventory.InventoryId,
+                    InventoryName = foundInventory.InventoryName,
+                    Quantity = foundInventory.Quantity,
+                    Price = foundInventory.Price,
+                    DateReceived = foundInventory.DateReceived
+                };
+
+            title = $"Edit {inventory.InventoryName}";
+        }
+        else
+        {
+            inventory = new()
+            {
+                InventoryName = string.Empty,
+                Quantity = 0,
+                DateReceived = DateTime.UtcNow
+            };
+
+            title = "Add Inventory";
+        }
+    }
+
+    private void HandleSubmit()
+    {
+        if (inventory!.InventoryId == 0) 
+        { 
+            InventoryClient.AddInventory(inventory);
+        }
+        else
+        {
+            InventoryClient.UpdateInventory(inventory);
+        }
+
+        NavigationManager.NavigateTo("/");
+    }
+
+    private void Cancel()
+    {
+       NavigationManager.NavigateTo("/");
+    }
+
+}
