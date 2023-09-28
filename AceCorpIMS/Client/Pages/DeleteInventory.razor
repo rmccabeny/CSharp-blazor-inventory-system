@@ -1,6 +1,6 @@
 ﻿@using AceCorpIMS.Client.Models
 
-
+<!-- sets up the delete inventory function and it's ui -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -18,9 +18,11 @@
 </div>
 
 @code {
+    // construct the property for inventory
     [Parameter]
     public Inventory? Inventory { get; set; }
 
+    // create the functions needed to confirm and close the dialog box for deleting item
     [Parameter]
     public EventCallback<bool> OnClose { get; set; }
 

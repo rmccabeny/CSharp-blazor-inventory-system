@@ -8,13 +8,14 @@
 <h1>Office Equipment Inventory</h1>
 <h3>@title</h3>
 
+<!-- validation check for inventory -->
 @if (inventory is null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-
+// creates the form where the data will display in the table
 <div class="row">
     <div class="col-sm-4">
         <EditForm Model="@inventory" OnValidSubmit="HandleSubmit">
@@ -44,15 +45,19 @@ else
 }
 
 @code {
+    // constructors for inventory and it's id field
     [Parameter]
     public int? InventoryId { get; set; }
 
     private Inventory? inventory;
 
+    // constructor for the title
     private string title = string.Empty;
 
+    // sets the parameters for the table
     protected override void OnParametersSet()
     {
+        // validation for getting the inventory
         if (InventoryId is not null)
         {
             Inventory foundInventory = InventoryClient.GetInventory(InventoryId.Value);
@@ -80,6 +85,7 @@ else
         }
     }
 
+    // handles the submission for editing the inventory
     private void HandleSubmit()
     {
         if (inventory!.InventoryId == 0) 
@@ -94,6 +100,7 @@ else
         NavigationManager.NavigateTo("/");
     }
 
+    // establishes cancel function that returns the user to the main page
     private void Cancel()
     {
        NavigationManager.NavigateTo("/");

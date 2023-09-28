@@ -2,9 +2,11 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    
-    
-    
+    background-image: url('office_inventory_bg.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #000000;
 }
 
 h1:focus {
@@ -40,6 +42,12 @@ a, .btn-link {
 .content {
     padding-top: 1.1rem;
     
+
+    
+}
+
+.tbody {
+    color: #ff0000;
 }
 
 .valid.modified:not([type=checkbox]) {

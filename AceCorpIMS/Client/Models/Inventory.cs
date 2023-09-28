@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AceCorpIMS.Client.Models;
 
+    // create the fields needed for the application
     public class Inventory
     {
     

@@ -2,6 +2,7 @@
 
 namespace AceCorpIMS.Client;
 
+// creates the data for the table
 public static class InventoryClient
 {
     private static readonly List<Inventory> inventories = new()
@@ -49,22 +50,26 @@ public static class InventoryClient
 
     };
 
+    // creates function to get the inventory and returns it to the inventory array
     public static Inventory[] GetInventories()
     {
         return inventories.ToArray();
     }
 
+    // adds the inventory data to the table 
     public static void AddInventory(Inventory inventory)
     {
         inventory.InventoryId = inventories.Max(inventory => inventory.InventoryId) + 1;
         inventories.Add(inventory);
     }
 
+    // finds the inventory for the table
     public static Inventory GetInventory(int InventoryId)
     {
         return inventories.Find(inventory => inventory.InventoryId == InventoryId) ?? throw new Exception("Could not find item!");
     }
 
+    // updates the inventory depending on which function is chosen
     public static void UpdateInventory(Inventory updatedInventory)
     {
         Inventory existingInventory = GetInventory(updatedInventory.InventoryId);
@@ -74,6 +79,7 @@ public static class InventoryClient
         existingInventory.DateReceived= updatedInventory.DateReceived;
     }
 
+    // function to delete inventory from the table
     public static void DeleteInventory(int IventoryId)
     {
         Inventory inventory = GetInventory(IventoryId);
