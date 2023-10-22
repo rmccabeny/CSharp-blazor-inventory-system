@@ -34,7 +34,7 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         action: upload
         deployment_environment: ${{env.DEPLOYMENT_ENVIRONMENT}}
-        app_location: ${{ env.APP_DIRECTORY }}
+        app_location: ${{ env.AceCorpIMS }}
         api_location: ${{ env.API_DIRECTORY }}
         output_location: ${{ env.OUTPUT }}
   close_pull_request_job:
