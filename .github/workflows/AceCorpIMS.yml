@@ -13,7 +13,7 @@ on:
     - master
 env:
   AZURE_STATIC_WEBAPP_NAME: AceCorpIMS
-  APP_DIRECTORY: Client
+  APP_DIRECTORY: AceCorpIMS
   API_DIRECTORY: ''
   OUTPUT: wwwroot
   DEPLOYMENT_ENVIRONMENT: preview
@@ -34,7 +34,7 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         action: upload
         deployment_environment: ${{env.DEPLOYMENT_ENVIRONMENT}}
-        app_location: ${{ env.AceCorpIMS }}
+        app_location: ${{ env.APP_DIRECTORY }}
         api_location: ${{ env.API_DIRECTORY }}
         output_location: ${{ env.OUTPUT }}
   close_pull_request_job:
